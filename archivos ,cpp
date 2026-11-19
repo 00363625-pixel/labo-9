@@ -1,0 +1,80 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+
+    int opcion;
+    string producto;
+    float monto;
+
+    do {
+        cout << "registro de ventas" << endl;
+        cout << "1. Registrar venta" << endl;
+        cout << "2. Mostrar ventas" << endl;
+        cout << "3. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+
+            case 1: {
+                ofstream archivo("ventas.txt", ios::app);
+
+                if (archivo.is_open()) {
+
+                    cout << "Ingrese el producto: ";
+                    cin.ignore();
+                    getline(cin, producto);
+
+                    cout << "Ingrese el monto: ";
+                    cin >> monto;
+
+                    archivo << producto << " - $" << monto << endl;
+
+                    archivo.close();
+
+                    cout << "Venta guardada correctamente." << endl;
+                }
+                else {
+                    cout << "Error al abrir el archivo." << endl;
+                }
+
+                break;
+            }
+
+            case 2: {
+                ifstream archivo("ventas.txt");
+
+                if (archivo.is_open()) {
+
+                    string linea;
+
+                    cout << "ventas registradas" << endl;
+
+                    while (getline(archivo, linea)) {
+                        cout << linea << endl;
+                    }
+
+                    archivo.close();
+                }
+                else {
+                    cout << "No se pudo abrir el archivo." << endl;
+                }
+
+                break;
+            }
+
+            case 3:
+                cout << "Saliendo del programa..." << endl;
+                break;
+
+            default:
+                cout << "Opcion incorrecta." << endl;
+        }
+
+    } while (opcion != 3);
+
+    return 0;
+}
